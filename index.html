@@ -7,7 +7,7 @@
     <title>Reboque Cajá || Guincho Profissional</title>
     
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="icon" href="assets/images/logo.jpg" type="image/x-icon">
+    <link rel="icon" href="assets/images/logo.webp" type="image/x-icon">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -17,7 +17,7 @@
       "@context": "https://schema.org",
       "@type": "AutoTowingService",
       "name": "Reboque Cajá RMV 24h",
-      "image": "assets/images/logo.jpg",
+      "image": "assets/images/logo.webp",
       "telephone": "+5581984542141",
       "address": {
         "@type": "PostalAddress",
@@ -34,7 +34,7 @@
     <header class="glass-header">
         <div class="container navbar">
             <a href="#" class="logo-link">
-                <img src="assets/images/logo.jpg" alt="Reboque Cajá RMV" class="logo-img">
+                <img src="assets/images/logo.webp" alt="Reboque Cajá RMV" class="logo-img">
             </a>
             
             <div class="mobile-status">
@@ -45,6 +45,7 @@
                 <i class="fas fa-bars"></i>
             </div>
 
+            <div class="menu-overlay" id="menu-overlay"></div>
             <nav class="nav-menu">
                 <a href="#inicio">Início</a>
                 <a href="#sobre">Sobre</a>
@@ -71,21 +72,21 @@
             <div class="quick-actions">
                 <p class="quick-label">Qual sua emergência?</p>
                 <div class="action-buttons">
-                    <a href="https://wa.me/5581984542141?text=Olá,%20estou%20com%20pane%20mecânica/elétrica." target="_blank" class="q-btn">
+                    <a href="https://wa.me/5581984542141?text=Oi!%20Meu%20veículo%20deu%20pane%20e%20preciso%20de%20socorro%20rápido.%20Podem%20me%20ajudar%3F" target="_blank" class="q-btn">
                         <i class="fas fa-car-battery"></i> Pane
                     </a>
-                    <a href="https://wa.me/5581984542141?text=Olá,%20meu%20carro%20sofreu%20uma%20colisão." target="_blank" class="q-btn">
+                    <a href="https://wa.me/5581984542141?text=Oi!%20Sofri%20uma%20colisão%20e%20preciso%20de%20guincho%20urgente.%20Qual%20o%20valor%3F" target="_blank" class="q-btn">
                         <i class="fas fa-car-crash"></i> Colisão
                     </a>
-                    <a href="https://wa.me/5581984542141?text=Olá,%20preciso%20de%20um%20transporte%20agendado." target="_blank" class="q-btn">
+                    <a href="https://wa.me/5581984542141?text=Oi!%20Quero%20agendar%20um%20transporte%20de%20veículo.%20Qual%20o%20melhor%20preço%3F" target="_blank" class="q-btn">
                         <i class="fas fa-calendar-alt"></i> Agendar
                     </a>
                 </div>
             </div>
 
             <div class="main-cta-group">
-                <a href="https://wa.me/5581984542141?text=Preciso%20de%20guincho%20agora!" class="btn-hero-primary pulse">
-                    <i class="fab fa-whatsapp"></i> Chamar Agora
+                <a href="https://wa.me/5581984542141?text=Oi!%20Estou%20precisando%20de%20guincho%20AGORA.%20Qual%20o%20tempo%20de%20chegada%3F" class="btn-hero-primary pulse">
+                    <i class="fab fa-whatsapp"></i> Solicitar Guincho
                 </a>
                 <a href="tel:5581984542141" class="btn-hero-secondary">
                     <i class="fas fa-phone"></i> Ligar
@@ -134,7 +135,7 @@
     <section id="sobre" class="section-padding bg-gradient">
         <div class="container about-wrapper">
             <div class="about-img-box reveal">
-                <img src="assets/images/fotos_reboque_2.jpg" alt="Frota Reboque Cajá">
+                <img src="assets/images/fotos_reboque_2.webp" alt="Frota Reboque Cajá">
                 <div class="floating-badge">
                     <span class="big-num">7</span>
                     <span class="text-num">Anos de<br>Sucesso</span>
@@ -188,7 +189,7 @@
             <div class="gallery-area reveal">
                 <h3>Na Prática</h3>
                 <div class="gallery-frame">
-                    <img src="assets/images/fotos_reboque_1.jpg" alt="Galeria de Reboques">
+                    <img src="assets/images/fotos_reboque_1.webp" alt="Galeria de Reboques">
                 </div>
             </div>
         </div>
@@ -253,35 +254,54 @@
         <a href="tel:5581984542141" class="app-btn btn-call-app">
             <i class="fas fa-phone"></i> LIGAR
         </a>
-        <a href="https://wa.me/5581984542141?text=Preciso%20de%20ajuda%20urgente!" class="app-btn btn-wpp-app">
-            <i class="fab fa-whatsapp"></i> ZAP 24H
+        <a href="https://wa.me/5581984542141?text=Oi!%20Preciso%20de%20socorro%20agora!%20Podem%20enviar%20um%20guincho%3F" class="app-btn btn-wpp-app">
+            <i class="fab fa-whatsapp"></i> SOCORRO 24H
         </a>
     </div>
 
+    <!-- Botão flutuante do WhatsApp (aparece apenas no desktop e tablet) -->
+    <a href="https://wa.me/5581984542141?text=Oi!%20Vi%20o%20site%20de%20vocês%20e%20quero%20saber%20o%20valor%20do%20guincho%20para%20minha%20região." class="whatsapp-float" target="_blank" aria-label="Fale conosco pelo WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
     <script>
-        // Menu
+        // =============================================
+        // MENU GAVETA (Drawer) + Overlay
+        // =============================================
         const menuToggle = document.getElementById('mobile-menu');
         const navMenu = document.querySelector('.nav-menu');
-        
+        const menuOverlay = document.getElementById('menu-overlay');
+
+        // Função para ABRIR o menu
+        function openMenu() {
+            navMenu.classList.add('active');
+            menuOverlay.classList.add('active');
+            menuToggle.querySelector('i').classList.remove('fa-bars');
+            menuToggle.querySelector('i').classList.add('fa-times');
+            document.body.style.overflow = 'hidden';  // Trava o scroll do fundo
+        }
+
+        // Função para FECHAR o menu
+        function closeMenu() {
+            navMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            menuToggle.querySelector('i').classList.remove('fa-times');
+            menuToggle.querySelector('i').classList.add('fa-bars');
+            document.body.style.overflow = '';         // Libera o scroll do fundo
+        }
+
+        // Clique no hambúrguer: abre ou fecha
         menuToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            const icon = menuToggle.querySelector('i');
-            if(navMenu.classList.contains('active')){
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
+            navMenu.classList.contains('active') ? closeMenu() : openMenu();
         });
 
+        // Clique em qualquer link do menu: fecha o menu e rola até a seção
         document.querySelectorAll('.nav-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('active');
-                menuToggle.querySelector('i').classList.remove('fa-times');
-                menuToggle.querySelector('i').classList.add('fa-bars');
-            });
+            link.addEventListener('click', closeMenu);
         });
+
+        // Clique no overlay escuro: fecha o menu
+        menuOverlay.addEventListener('click', closeMenu);
 
         // Scroll Animation
         const revealElements = document.querySelectorAll('.reveal');

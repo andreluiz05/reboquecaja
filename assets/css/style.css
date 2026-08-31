@@ -1,223 +1,1354 @@
+/* ============================================================
+   REBOQUE CAJÁ RMV - FOLHA DE ESTILOS PRINCIPAL
+   ============================================================
+   Autor: André Luiz
+   Última atualização: Agosto/2026
+   
+   ÍNDICE:
+   1. Variáveis Globais (Design Tokens)
+   2. Reset e Base
+   3. Layout (Container)
+   4. Cabeçalho (Header com efeito Glass)
+   5. Menu de Navegação (Desktop)
+   6. Botão CTA do Cabeçalho
+   7. Menu Mobile e Status Online
+   8. Seção Hero (Banner Principal)
+   9. Ações Rápidas (Quick Actions)
+  10. Botões CTA do Hero
+  11. Faixa Marquee (Texto Rolante)
+  12. Seção Features (Diferenciais)
+  13. Estilos Comuns de Seções
+  14. Seção Sobre Nós
+  15. Seção Serviços
+  16. Galeria de Fotos
+  17. Seção Depoimentos
+  18. Rodapé (Footer)
+  19. Barra de Ação Mobile (App Bar)
+  20. Animações
+  21. Responsividade (Mobile ≤ 768px)
+   ============================================================ */
+
+
+/* ==========================================================
+   1. VARIÁVEIS GLOBAIS (DESIGN TOKENS)
+   ==========================================================
+   Aqui ficam todas as cores, fontes e sombras do projeto.
+   Para mudar a identidade visual do site inteiro, basta
+   alterar os valores abaixo. Nenhum valor "solto" no CSS!
+   ========================================================== */
 :root {
-    --primary: #D32F2F;        /* Vermelho vibrante */
-    --primary-dark: #b71c1c;   
-    --secondary: #FFC107;      /* Amarelo ouro */
-    --dark: #1e1e24;           /* Preto suave */
-    --light-bg: #fdfdfd;
-    --whatsapp: #25D366;
-    --font: 'Poppins', sans-serif;
-    --shadow-card: 0 10px 30px rgba(0,0,0,0.08);
+    --primary: #D32F2F;             /* Vermelho vibrante - cor principal da marca */
+    --primary-dark: #b71c1c;        /* Vermelho escuro - usado em hovers e destaques */
+    --secondary: #FFC107;           /* Amarelo ouro - cor de apoio e destaques */
+    --dark: #1e1e24;                /* Preto suave - textos e fundos escuros */
+    --light-bg: #fdfdfd;            /* Cinza quase branco - fundo geral do site */
+    --whatsapp: #25D366;            /* Verde WhatsApp - botões de contato */
+    --font: 'Poppins', sans-serif;  /* Fonte principal do projeto */
+    --shadow-card: 0 10px 30px rgba(0,0,0,0.08); /* Sombra padrão dos cards */
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font); }
-html { scroll-behavior: smooth; scroll-padding-top: 80px; } /* Pulo do gato para o menu não cobrir o titulo */
-body { color: #333; line-height: 1.6; background: var(--light-bg); padding-bottom: 70px; }
 
-@media(min-width: 769px) { body { padding-bottom: 0; } }
+/* ==========================================================
+   2. RESET E BASE
+   ==========================================================
+   Remove margens e paddings padrão do navegador.
+   Define a fonte e o comportamento geral da página.
+   ========================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font);
+    -webkit-tap-highlight-color: transparent;  /* Remove o flash azul ao tocar em links/botões no mobile */
+}
 
-/* --- GLASS HEADER --- */
+html {
+    scroll-behavior: smooth;        /* Rolagem suave ao clicar nos links */
+    scroll-padding-top: 80px;       /* Compensa a altura do header fixo ao rolar */
+}
+
+body {
+    color: #333;                    /* Cor padrão dos textos */
+    line-height: 1.6;              /* Espaçamento entre linhas para leitura confortável */
+    background: var(--light-bg);
+    padding-bottom: 70px;          /* Espaço para a barra de ação mobile não cobrir conteúdo */
+}
+
+/* No desktop, remove o padding inferior (não tem barra mobile) */
+@media (min-width: 769px) {
+    body {
+        padding-bottom: 0;
+    }
+}
+
+
+/* ==========================================================
+   3. LAYOUT (CONTAINER)
+   ==========================================================
+   Container centralizado que limita a largura do conteúdo.
+   Usado em praticamente todas as seções do site.
+   ========================================================== */
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 20px;
+    width: 100%;
+}
+
+
+/* ==========================================================
+   4. CABEÇALHO (HEADER COM EFEITO GLASS)
+   ==========================================================
+   Header fixo no topo com efeito "vidro fosco" (glassmorphism).
+   O backdrop-filter cria o blur atrás do header.
+   ========================================================== */
 .glass-header {
-    position: fixed; top: 0; width: 100%; height: 80px; z-index: 1000;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 80px;
+    z-index: 1000;                  /* Fica acima de todo o conteúdo */
     background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px); /* Efeito de vidro */
+    backdrop-filter: blur(10px);    /* Efeito de vidro fosco */
     box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-    display: flex; align-items: center;
+    display: flex;
+    align-items: center;
 }
 
-.container { max-width: 1200px; margin: auto; padding: 0 20px; width: 100%; }
-.navbar { display: flex; justify-content: space-between; align-items: center; }
-.logo-img { height: 60px; width: auto; }
+/* Barra interna do header com logo à esquerda e menu à direita */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-.nav-menu { display: flex; gap: 30px; }
-.nav-menu a { text-decoration: none; color: var(--dark); font-weight: 500; font-size: 0.95rem; transition: 0.3s; position: relative; }
-.nav-menu a:hover { color: var(--primary); }
+/* Logotipo */
+.logo-img {
+    height: 60px;
+    width: auto;
+}
+
+
+/* ==========================================================
+   5. MENU DE NAVEGAÇÃO (DESKTOP)
+   ==========================================================
+   Links horizontais no desktop.
+   Cada link tem um sublinhado animado que aparece no hover.
+   ========================================================== */
+.nav-menu {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: var(--dark);
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: 0.3s;
+    position: relative;             /* Necessário para o ::after posicionar */
+}
+
+.nav-menu a:hover {
+    color: var(--primary);
+}
+
+/* Linha vermelha animada que aparece embaixo do link ao passar o mouse */
 .nav-menu a::after {
-    content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0;
-    background: var(--primary); transition: 0.3s;
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background: var(--primary);
+    transition: 0.3s;
 }
-.nav-menu a:hover::after { width: 100%; }
 
+.nav-menu a:hover::after {
+    width: 100%;                    /* Expande a linha ao passar o mouse */
+}
+
+
+/* ==========================================================
+   6. BOTÃO CTA DO CABEÇALHO
+   ==========================================================
+   Botão vermelho arredondado "Ligar Agora" no header.
+   Visível apenas no desktop.
+   ========================================================== */
 .btn-header-call {
-    background: var(--primary); color: #fff; padding: 10px 25px; border-radius: 50px;
-    text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 10px;
-    box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3); transition: 0.3s;
+    background: var(--primary);
+    color: #fff;
+    padding: 10px 25px;
+    border-radius: 50px;            /* Formato "pílula" */
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
+    transition: 0.3s;
 }
-.btn-header-call:hover { background: var(--primary-dark); transform: translateY(-2px); }
 
-/* Mobile Menu & Status */
-.menu-toggle { display: none; font-size: 1.8rem; cursor: pointer; color: var(--dark); }
-.mobile-status { display: none; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: 700; color: #2e7d32; background: #e8f5e9; padding: 4px 12px; border-radius: 20px; }
-.dot { width: 8px; height: 8px; background: #2e7d32; border-radius: 50%; animation: blink 1.5s infinite; }
-@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+.btn-header-call:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);    /* Sobe levemente ao passar o mouse */
+}
 
-/* --- HERO SECTION --- */
+
+/* ==========================================================
+   7. MENU MOBILE E STATUS ONLINE
+   ==========================================================
+   Ícone hambúrguer (☰) e badge "Online 24h" no mobile.
+   Ambos ficam ocultos no desktop e aparecem no mobile.
+   ========================================================== */
+
+/* Ícone hambúrguer - escondido no desktop */
+.menu-toggle {
+    display: none;                  /* Aparece apenas no @media (max-width: 768px) */
+    font-size: 1.6rem;
+    cursor: pointer;
+    color: var(--dark);
+    z-index: 2100;                  /* Acima do overlay e do menu */
+    transition: 0.3s;
+}
+
+.menu-toggle:hover {
+    color: var(--primary);
+}
+
+/* Overlay escuro que aparece atrás do menu gaveta */
+/* Escurece o resto da página e fecha o menu ao clicar */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1999;                  /* Abaixo do menu, acima do conteúdo */
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.4s ease;
+}
+
+.menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Badge verde "Online 24h" */
+.mobile-status {
+    display: none;                  /* Aparece apenas no mobile */
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #2e7d32;
+    background: #e8f5e9;
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+/* Bolinha verde piscante do status */
+.dot {
+    width: 8px;
+    height: 8px;
+    background: #2e7d32;
+    border-radius: 50%;
+    animation: blink 1.5s infinite;
+}
+
+/* Animação de piscar da bolinha verde */
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.4; }
+}
+
+
+/* ==========================================================
+   8. SEÇÃO HERO (BANNER PRINCIPAL)
+   ==========================================================
+   Banner de tela cheia com foto de fundo e overlay escuro.
+   É a primeira coisa que o visitante vê ao abrir o site.
+   ========================================================== */
 .hero {
-    height: 100vh; min-height: 600px;
-    background: url('fotos_reboque (2).jpg') no-repeat center center/cover;
-    position: relative; display: flex; align-items: center; justify-content: center;
-    text-align: center; color: #fff; margin-top: 0;
+    height: 100vh;
+    min-height: 600px;              /* Garante altura mínima em telas pequenas */
+    background: url('../images/fotos_reboque_2.webp') no-repeat center center/cover;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    margin-top: 0;
 }
+
+/* Camada escura semi-transparente sobre a foto de fundo */
 .hero-overlay {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 100%);
     z-index: 1;
 }
-.hero-content { position: relative; z-index: 2; padding: 0 20px; max-width: 900px; opacity: 0; transform: translateY(30px); transition: 1s ease; }
-.hero-content.active { opacity: 1; transform: translateY(0); }
 
+/* Conteúdo do hero (textos e botões) - fica acima do overlay */
+.hero-content {
+    position: relative;
+    z-index: 2;                     /* Acima do overlay (z-index: 1) */
+    padding: 0 20px;
+    max-width: 900px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: 1s ease;            /* Animação de entrada suave */
+}
+
+.hero-content.active {
+    opacity: 1;
+    transform: translateY(0);       /* Estado final da animação */
+}
+
+/* Badge de confiança ("Plantão 24h • Atendimento imediato") */
 .badge-trust {
-    background: rgba(255,255,255,0.15); backdrop-filter: blur(5px);
-    border: 1px solid rgba(255,255,255,0.3); padding: 8px 20px; border-radius: 30px;
-    display: inline-block; font-size: 0.9rem; margin-bottom: 20px; font-weight: 600; color: var(--secondary);
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 8px 20px;
+    border-radius: 30px;
+    display: inline-block;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: var(--secondary);
 }
 
-.hero h1 { font-size: 3.5rem; font-weight: 800; line-height: 1.1; margin-bottom: 15px; text-shadow: 0 5px 15px rgba(0,0,0,0.5); }
-.hero h1 span { color: var(--primary); -webkit-text-stroke: 1px #fff; }
-.hero p { font-size: 1.2rem; color: #ddd; margin-bottom: 30px; font-weight: 300; }
+/* Título principal do hero */
+.hero h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 15px;
+    text-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
 
-/* Quick Actions */
-.quick-actions { margin-bottom: 30px; }
-.quick-label { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: #aaa; margin-bottom: 15px; }
-.action-buttons { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+/* Palavra destaque no título (ex: "Cajá") */
+.hero h1 span {
+    color: var(--primary);
+    -webkit-text-stroke: 1px #fff;
+}
+
+/* Subtítulo do hero */
+.hero p {
+    font-size: 1.2rem;
+    color: #ddd;
+    margin-bottom: 30px;
+    font-weight: 300;
+}
+
+
+/* ==========================================================
+   9. AÇÕES RÁPIDAS (QUICK ACTIONS)
+   ==========================================================
+   Botões pequenos de ação rápida dentro do hero.
+   Ex: "Pneu furou", "Pane elétrica", etc.
+   ========================================================== */
+.quick-actions {
+    margin-bottom: 30px;
+}
+
+.quick-label {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #aaa;
+    margin-bottom: 15px;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* Botão individual de ação rápida */
 .q-btn {
-    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
-    color: #fff; padding: 10px 20px; border-radius: 8px; text-decoration: none;
-    font-size: 0.9rem; transition: 0.3s; display: flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
-.q-btn:hover { background: var(--secondary); color: var(--dark); border-color: var(--secondary); }
 
-.main-cta-group { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+.q-btn:hover {
+    background: var(--secondary);
+    color: var(--dark);
+    border-color: var(--secondary);
+}
+
+
+/* ==========================================================
+  10. BOTÕES CTA DO HERO
+   ==========================================================
+   Botões grandes de chamada para ação no banner principal.
+   Um verde (WhatsApp) e um transparente (Ligar).
+   ========================================================== */
+.main-cta-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+/* Botão principal verde (WhatsApp) */
 .btn-hero-primary {
-    background: var(--whatsapp); color: #fff; padding: 16px 40px; border-radius: 50px;
-    text-decoration: none; font-weight: 700; font-size: 1.1rem; display: flex; align-items: center; gap: 10px;
-    box-shadow: 0 0 20px rgba(37, 211, 102, 0.4); transition: 0.3s;
+    background: var(--whatsapp);
+    color: #fff;
+    padding: 16px 40px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 0 20px rgba(37, 211, 102, 0.4);
+    transition: 0.3s;
 }
+
+/* Botão secundário transparente (Ligar) */
 .btn-hero-secondary {
-    background: transparent; color: #fff; border: 2px solid #fff; padding: 16px 40px;
-    border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 1.1rem; display: flex; align-items: center; gap: 10px; transition: 0.3s;
+    background: transparent;
+    color: #fff;
+    border: 2px solid #fff;
+    padding: 16px 40px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.3s;
 }
-.btn-hero-secondary:hover { background: #fff; color: var(--dark); }
-.pulse { animation: pulse 2s infinite; }
 
-/* --- MARQUEE STRIP --- */
-.marquee-strip { background: var(--secondary); overflow: hidden; white-space: nowrap; padding: 12px 0; position: relative; z-index: 5; box-shadow: 0 5px 10px rgba(0,0,0,0.1); }
-.marquee-content { display: inline-block; animation: marquee 20s linear infinite; }
-.marquee-content span { font-weight: 800; color: var(--dark); margin: 0 20px; font-size: 0.9rem; }
-.marquee-content i { margin-right: 5px; color: var(--primary); }
-@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.btn-hero-secondary:hover {
+    background: #fff;
+    color: var(--dark);
+}
 
-/* --- FEATURES --- */
-.features { padding: 60px 20px; }
-.features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: -20px; }
+/* Animação de pulsar (usada no botão do WhatsApp) */
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+
+/* ==========================================================
+  11. FAIXA MARQUEE (TEXTO ROLANTE)
+   ==========================================================
+   Faixa amarela com texto rolando infinitamente.
+   Mostra cidades atendidas e diferenciais.
+   ========================================================== */
+.marquee-strip {
+    background: var(--secondary);
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 12px 0;
+    position: relative;
+    z-index: 5;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+}
+
+.marquee-content {
+    display: inline-block;
+    animation: marquee 20s linear infinite;
+}
+
+.marquee-content span {
+    font-weight: 800;
+    color: var(--dark);
+    margin: 0 20px;
+    font-size: 0.9rem;
+}
+
+.marquee-content i {
+    margin-right: 5px;
+    color: var(--primary);
+}
+
+/* Animação do texto rolante (move da direita para a esquerda) */
+@keyframes marquee {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }   /* -50% porque o conteúdo é duplicado */
+}
+
+
+/* ==========================================================
+  12. SEÇÃO FEATURES (DIFERENCIAIS)
+   ==========================================================
+   Cards brancos com ícones circulares.
+   Mostram os diferenciais da empresa (Rapidez, Confiança, etc).
+   ========================================================== */
+.features {
+    padding: 60px 20px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: -20px;              /* Sobe os cards para sobrepor a faixa marquee */
+}
+
 .feature-card {
-    background: #fff; padding: 40px 30px; border-radius: 20px; text-align: center;
-    box-shadow: var(--shadow-card); transition: 0.4s; border: 1px solid rgba(0,0,0,0.05);
+    background: #fff;
+    padding: 40px 30px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: var(--shadow-card);
+    transition: 0.4s;
+    border: 1px solid rgba(0,0,0,0.05);
 }
-.feature-card:hover { transform: translateY(-10px); }
-.icon-circle { width: 70px; height: 70px; background: #ffebee; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 1.8rem; color: var(--primary); }
-.feature-card h3 { font-size: 1.3rem; margin-bottom: 10px; }
 
-/* --- SECTIONS COMMON --- */
-.section-padding { padding: 80px 0; }
-.bg-gradient { background: linear-gradient(to bottom, #fdfdfd, #f4f4f4); }
-.bg-dark { background: #1a1a1a; color: #fff; }
-.section-title { text-align: center; margin-bottom: 50px; }
-.section-title h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 15px; }
-.divider { height: 4px; width: 60px; background: var(--primary); margin: 0 auto; border-radius: 2px; }
-.section-title.white h2 { color: #fff; }
+.feature-card:hover {
+    transform: translateY(-10px);   /* Sobe o card ao passar o mouse */
+}
 
-/* --- SOBRE --- */
-.about-wrapper { display: flex; align-items: center; gap: 60px; flex-wrap: wrap; }
-.about-img-box { flex: 1; min-width: 300px; position: relative; }
-.about-img-box img { width: 100%; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
+/* Círculo colorido ao redor do ícone */
+.icon-circle {
+    width: 70px;
+    height: 70px;
+    background: #ffebee;           /* Rosa claro (tom do vermelho primário) */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 1.8rem;
+    color: var(--primary);
+}
+
+.feature-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+}
+
+
+/* ==========================================================
+  13. ESTILOS COMUNS DE SEÇÕES
+   ==========================================================
+   Classes utilitárias reutilizadas em várias seções.
+   ========================================================== */
+
+/* Padding padrão de seção */
+.section-padding {
+    padding: 80px 0;
+}
+
+/* Fundo com gradiente suave claro */
+.bg-gradient {
+    background: linear-gradient(to bottom, #fdfdfd, #f4f4f4);
+}
+
+/* Fundo escuro (usado na seção de serviços) */
+.bg-dark {
+    background: #1a1a1a;
+    color: #fff;
+}
+
+/* Título centralizado de seção */
+.section-title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-title h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+}
+
+/* Linha vermelha decorativa abaixo do título */
+.divider {
+    height: 4px;
+    width: 60px;
+    background: var(--primary);
+    margin: 0 auto;
+    border-radius: 2px;
+}
+
+/* Título branco (para seções com fundo escuro) */
+.section-title.white h2 {
+    color: #fff;
+}
+
+
+/* ==========================================================
+  14. SEÇÃO SOBRE NÓS
+   ==========================================================
+   Layout lado a lado: foto à esquerda, texto à direita.
+   Inclui badge flutuante com anos de experiência.
+   ========================================================== */
+.about-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    flex-wrap: wrap;                /* Empilha no mobile */
+}
+
+/* Coluna da imagem */
+.about-img-box {
+    flex: 1;
+    min-width: 300px;
+    position: relative;             /* Para posicionar o badge flutuante */
+}
+
+.about-img-box img {
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+}
+
+/* Badge flutuante "7 Anos de Sucesso" */
 .floating-badge {
-    position: absolute; bottom: 30px; right: -20px; background: #fff; padding: 15px 25px;
-    border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); text-align: center; border-left: 5px solid var(--secondary);
+    position: absolute;
+    bottom: 30px;
+    right: -20px;
+    background: #fff;
+    padding: 15px 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    text-align: center;
+    border-left: 5px solid var(--secondary);
 }
-.big-num { display: block; font-size: 2.5rem; font-weight: 900; color: var(--primary); line-height: 1; }
-.text-num { font-size: 0.8rem; font-weight: 600; color: var(--dark); text-transform: uppercase; }
 
-.about-content { flex: 1; min-width: 300px; }
-.tagline { color: var(--primary); font-weight: 700; font-size: 0.9rem; letter-spacing: 2px; display: block; margin-bottom: 10px; }
-.pros-list { list-style: none; margin-top: 25px; }
-.pros-list li { margin-bottom: 12px; display: flex; align-items: center; gap: 10px; font-weight: 500; }
-.pros-list i { color: var(--whatsapp); font-size: 1.1rem; }
+/* Número grande no badge */
+.big-num {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--primary);
+    line-height: 1;
+}
 
-/* --- SERVICES --- */
-.services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 25px; }
+/* Texto pequeno no badge */
+.text-num {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--dark);
+    text-transform: uppercase;
+}
+
+/* Coluna do texto */
+.about-content {
+    flex: 1;
+    min-width: 300px;
+}
+
+/* Label "QUEM SOMOS" acima do título */
+.tagline {
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Lista de vantagens com ícones verdes */
+.pros-list {
+    list-style: none;
+    margin-top: 25px;
+}
+
+.pros-list li {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+}
+
+.pros-list i {
+    color: var(--whatsapp);         /* Verde para os ícones de check */
+    font-size: 1.1rem;
+}
+
+
+/* ==========================================================
+  15. SEÇÃO SERVIÇOS
+   ==========================================================
+   Cards semi-transparentes sobre fundo escuro.
+   Cada card mostra um tipo de veículo atendido.
+   ========================================================== */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
+}
+
 .srv-card {
-    background: rgba(255,255,255,0.05); padding: 35px 25px; border-radius: 15px; text-align: center;
-    border: 1px solid rgba(255,255,255,0.1); transition: 0.3s;
+    background: rgba(255,255,255,0.05);   /* Branco quase invisível sobre fundo escuro */
+    padding: 35px 25px;
+    border-radius: 15px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: 0.3s;
 }
-.srv-card:hover { background: rgba(255,255,255,0.1); transform: translateY(-5px); border-color: var(--primary); }
-.srv-card i { font-size: 2.5rem; color: var(--secondary); margin-bottom: 20px; }
-.srv-card h3 { margin-bottom: 10px; font-size: 1.2rem; }
-.srv-card p { font-size: 0.9rem; color: #aaa; }
 
-.gallery-area { margin-top: 60px; text-align: center; }
-.gallery-area h3 { color: #fff; margin-bottom: 20px; }
-.gallery-frame img { width: 100%; max-width: 800px; border-radius: 15px; border: 4px solid #333; }
+.srv-card:hover {
+    background: rgba(255,255,255,0.1);
+    transform: translateY(-5px);
+    border-color: var(--primary);
+}
 
-/* --- DEPOIMENTOS --- */
-.reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+.srv-card i {
+    font-size: 2.5rem;
+    color: var(--secondary);
+    margin-bottom: 20px;
+}
+
+.srv-card h3 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.srv-card p {
+    font-size: 0.9rem;
+    color: #aaa;
+}
+
+
+/* ==========================================================
+  16. GALERIA DE FOTOS
+   ==========================================================
+   Área de galeria dentro da seção de serviços.
+   ========================================================== */
+.gallery-area {
+    margin-top: 60px;
+    text-align: center;
+}
+
+.gallery-area h3 {
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.gallery-frame img {
+    width: 100%;
+    max-width: 800px;
+    border-radius: 15px;
+    border: 4px solid #333;
+}
+
+
+/* ==========================================================
+  17. SEÇÃO DEPOIMENTOS
+   ==========================================================
+   Cards brancos com avaliações de clientes.
+   Cada card tem estrelas amarelas e borda vermelha no topo.
+   ========================================================== */
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
 .review-box {
-    background: #fff; padding: 30px; border-radius: 15px; box-shadow: var(--shadow-card);
-    position: relative; border-top: 5px solid var(--primary);
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: var(--shadow-card);
+    position: relative;
+    border-top: 5px solid var(--primary);   /* Linha vermelha no topo do card */
 }
-.stars { color: var(--secondary); margin-bottom: 15px; font-size: 1.2rem; }
-.review-box p { font-style: italic; color: #555; margin-bottom: 20px; }
-.review-box h5 { font-weight: 700; text-align: right; }
 
-/* --- FOOTER --- */
-footer { background: #111; color: #ccc; }
-.footer-top { padding: 70px 0; border-bottom: 1px solid #222; }
-.footer-flex { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 40px; }
-.ft-brand, .ft-contact, .ft-loc { flex: 1; min-width: 250px; }
-.ft-brand h3 { color: #fff; font-size: 1.5rem; margin-bottom: 15px; }
-.ft-social a { color: #fff; font-size: 1.5rem; margin-right: 15px; transition: 0.3s; }
-.ft-social a:hover { color: var(--primary); }
+/* Estrelas de avaliação */
+.stars {
+    color: var(--secondary);
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
 
-.ft-contact h4, .ft-loc h4 { color: #fff; margin-bottom: 20px; font-size: 1.1rem; }
-.ft-link { display: block; color: #ccc; text-decoration: none; margin-bottom: 10px; transition: 0.3s; }
-.ft-link:hover { color: var(--primary); padding-left: 5px; }
-.ft-loc p { margin-bottom: 10px; }
-.small-text { font-size: 0.85rem; color: #777; }
-.footer-bottom { text-align: center; padding: 20px; background: #050505; font-size: 0.85rem; }
+/* Texto do depoimento */
+.review-box p {
+    font-style: italic;
+    color: #555;
+    margin-bottom: 20px;
+}
 
-/* --- APP BAR MOBILE --- */
+/* Nome do cliente */
+.review-box h5 {
+    font-weight: 700;
+    text-align: right;
+}
+
+
+/* ==========================================================
+  18. RODAPÉ (FOOTER)
+   ==========================================================
+   Rodapé escuro com 3 colunas: marca, contatos e localização.
+   ========================================================== */
+footer {
+    background: #111;
+    color: #ccc;
+}
+
+.footer-top {
+    padding: 70px 0;
+    border-bottom: 1px solid #222;
+}
+
+/* Layout flexível das 3 colunas do rodapé */
+.footer-flex {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+/* Cada coluna ocupa espaço igual */
+.ft-brand, .ft-contact, .ft-loc {
+    flex: 1;
+    min-width: 250px;
+}
+
+/* Nome da empresa no rodapé */
+.ft-brand h3 {
+    color: #fff;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+/* Ícones de redes sociais */
+.ft-social a {
+    color: #fff;
+    font-size: 1.5rem;
+    margin-right: 15px;
+    transition: 0.3s;
+}
+
+.ft-social a:hover {
+    color: var(--primary);
+}
+
+/* Títulos das colunas de contato e localização */
+.ft-contact h4, .ft-loc h4 {
+    color: #fff;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+}
+
+/* Links de contato (telefone, email) */
+.ft-link {
+    display: block;
+    color: #ccc;
+    text-decoration: none;
+    margin-bottom: 10px;
+    transition: 0.3s;
+}
+
+.ft-link:hover {
+    color: var(--primary);
+    padding-left: 5px;              /* Desloca para a direita no hover */
+}
+
+/* Localização */
+.ft-loc p {
+    margin-bottom: 10px;
+}
+
+.small-text {
+    font-size: 0.85rem;
+    color: #777;
+}
+
+/* Barra inferior do rodapé (copyright) */
+.footer-bottom {
+    text-align: center;
+    padding: 20px;
+    background: #050505;
+    font-size: 0.85rem;
+}
+
+
+/* ==========================================================
+  19. BARRA DE AÇÃO MOBILE (APP BAR)
+   ==========================================================
+   Barra fixa no rodapé do celular com dois botões:
+   "LIGAR" (escuro) e "ZAP 24H" (verde).
+   Aparece apenas no mobile.
+   ========================================================== */
 .app-bar {
-    display: none; position: fixed; bottom: 0; left: 0; width: 100%; height: 60px;
-    background: #fff; box-shadow: 0 -5px 20px rgba(0,0,0,0.1); z-index: 2000;
+    display: none;                  /* Aparece apenas no @media mobile */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: #fff;
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+    z-index: 2000;                  /* Acima de tudo */
 }
-.app-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; font-weight: 700; color: #fff; font-size: 1rem; }
-.btn-call-app { background: var(--dark); }
-.btn-wpp-app { background: var(--whatsapp); }
 
-/* --- RESPONSIVO --- */
-.reveal { opacity: 0; transform: translateY(30px); transition: 0.8s all ease; }
-.reveal.active { opacity: 1; transform: translateY(0); }
+/* Botão genérico da app bar */
+.app-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-decoration: none;
+    font-weight: 700;
+    color: #fff;
+    font-size: 1rem;
+}
 
+/* Botão "LIGAR" - fundo escuro */
+.btn-call-app {
+    background: var(--dark);
+}
+
+/* Botão "ZAP 24H" - fundo verde */
+.btn-wpp-app {
+    background: var(--whatsapp);
+}
+
+
+/* ==========================================================
+  20. BOTÃO FLUTUANTE DO WHATSAPP
+   ==========================================================
+   Bolha verde fixa no canto inferior direito da tela.
+   Aparece apenas no desktop e tablet.
+   No mobile está oculto pois já existe o botão "ZAP 24H"
+   na barra de ação inferior (app bar).
+   ========================================================== */
+.whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: var(--whatsapp);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    text-decoration: none;
+    z-index: 999;                   /* Abaixo do header (1000), acima do conteúdo */
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+    transition: 0.3s;
+    animation: whatsapp-pulse 2.5s infinite;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+}
+
+/* Animação de pulso suave ao redor do botão (chama atenção sem irritar) */
+@keyframes whatsapp-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
+    70%  { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+
+/* Esconde no mobile (já tem o botão na app bar inferior) */
 @media (max-width: 768px) {
-    .menu-toggle { display: block; }
-    .nav-menu {
-        position: fixed; top: 80px; left: -100%; width: 100%; background: #fff;
-        flex-direction: column; padding: 30px 0; transition: 0.4s; box-shadow: 0 5px 10px rgba(0,0,0,0.05); gap: 0;
+    .whatsapp-float {
+        display: none;
     }
-    .nav-menu.active { left: 0; }
-    .nav-menu a { padding: 15px 20px; border-bottom: 1px solid #f0f0f0; width: 100%; display: block; }
-    .nav-menu a::after { display: none; }
-    
-    .desktop-cta { display: none; }
-    .mobile-status { display: flex; }
-    .app-bar { display: flex; }
+}
 
-    .hero h1 { font-size: 2.5rem; }
-    .hero p { font-size: 1rem; }
-    .quick-actions { display: none; } /* Ocultar quick actions no mobile se ficar muito poluído, ou manter se preferir */
-    .hero-content { padding-top: 20px; }
-    .action-buttons { flex-direction: column; width: 100%; max-width: 300px; margin: 0 auto; }
-    .q-btn { justify-content: center; background: rgba(0,0,0,0.5); }
-    .quick-actions { display: block; margin-bottom: 20px; } /* Mantendo no mobile, ajustado */
 
-    .floating-badge { position: relative; right: auto; bottom: auto; margin-top: -30px; width: 200px; margin-left: auto; margin-right: auto; }
+/* ==========================================================
+  21. ANIMAÇÕES
+   ==========================================================
+   Classes de animação reutilizáveis.
+   A classe .reveal é ativada via JavaScript ao rolar a página.
+   ========================================================== */
+
+/* Estado inicial: invisível e deslocado para baixo */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: 0.8s all ease;
+}
+
+/* Estado ativo: visível e na posição correta */
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* ==========================================================
+  21. RESPONSIVIDADE (MOBILE ≤ 768px)
+   ==========================================================
+   Ajustes de layout para telas de celular e tablets.
+   O menu vira um painel lateral, fontes diminuem, etc.
+   ========================================================== */
+@media (max-width: 768px) {
+
+    /* --- Menu Hambúrguer (Gaveta Lateral Direita) --- */
+    /* Mostra o ícone ☰ no mobile */
+    .menu-toggle {
+        display: block;
+    }
+
+    /* 
+     * Menu "gaveta" que desliza da DIREITA para a ESQUERDA.
+     * O botão hambúrguer fica no canto direito do header,
+     * então o menu deve abrir do mesmo lado (princípio de UX).
+     * Largura de 280px para não cobrir a tela toda e
+     * permitir que o usuário veja o overlay e feche clicando nele.
+     */
+    .nav-menu {
+        position: fixed;
+        top: 0;                         /* Começa do topo da tela (não abaixo do header) */
+        right: -300px;                  /* Escondido fora da tela à DIREITA */
+        left: auto;                     /* Reseta qualquer left herdado */
+        width: 280px;                   /* Largura fixa da gaveta (não ocupa tela toda) */
+        height: 100vh;                  /* Altura total da tela */
+        background: #fff;
+        flex-direction: column;
+        padding: 100px 0 30px;          /* 100px no topo para dar espaço ao "X" */
+        transition: 0.4s cubic-bezier(0.77, 0, 0.175, 1);  /* Animação suave e elegante */
+        box-shadow: -10px 0 30px rgba(0,0,0,0.1);          /* Sombra do lado esquerdo */
+        gap: 0;
+        z-index: 2050;                  /* Acima do overlay (1999) */
+        overflow-y: auto;               /* Scroll se tiver muitos links */
+    }
+
+    /* Quando o menu está aberto - desliza para dentro da tela */
+    .nav-menu.active {
+        right: 0;
+    }
+
+    /* Links do menu - estilo gaveta com hover suave */
+    .nav-menu a {
+        padding: 16px 30px;
+        border-bottom: 1px solid #f5f5f5;
+        width: 100%;
+        display: block;
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--dark);
+        transition: 0.3s;
+    }
+
+    .nav-menu a:hover,
+    .nav-menu a:active {
+        background: #fff5f5;            /* Fundo rosado suave no hover (tom do vermelho primário) */
+        color: var(--primary);
+        padding-left: 35px;             /* Desloca levemente para a direita ao passar o dedo */
+    }
+
+    /* Remove o sublinhado animado no mobile */
+    .nav-menu a::after {
+        display: none;
+    }
+
+    /* --- Visibilidade de Elementos --- */
+    .desktop-cta { display: none; }         /* Esconde o botão CTA do header */
+    .mobile-status { display: flex; }       /* Mostra o badge "Online 24h" */
+    .app-bar { display: flex; }             /* Mostra a barra de ação inferior */
+
+    /* --- Hero Mobile --- */
+    .hero h1 {
+        font-size: 2.5rem;                 /* Reduz o título para caber na tela */
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+
+    .hero-content {
+        padding-top: 20px;
+    }
+
+    /* --- Quick Actions Mobile --- */
+    .quick-actions {
+        display: block;                     /* Mantém visível no mobile */
+        margin-bottom: 20px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    .q-btn {
+        justify-content: center;
+        background: rgba(0,0,0,0.5);       /* Fundo mais escuro no mobile */
+    }
+
+    /* --- Badge flutuante no mobile --- */
+    /* Reposiciona para baixo da imagem, centralizado */
+    .floating-badge {
+        position: relative;
+        right: auto;
+        bottom: auto;
+        margin-top: -30px;
+        width: 200px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+
+/* ==========================================================
+  22. RESPONSIVIDADE - TABLET (769px ~ 1024px)
+   ==========================================================
+   Ajustes específicos para tablets (iPad, Galaxy Tab, etc).
+   Nessa faixa, o layout não é nem mobile nem desktop:
+   - Cards ficam em 2 colunas (em vez de 3)
+   - Footer empilha parcialmente
+   - Paddings são levemente reduzidos
+   ========================================================== */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+    /* --- Hero no Tablet --- */
+    .hero h1 {
+        font-size: 2.8rem;                 /* Meio-termo entre desktop (3.5) e mobile (2.5) */
+    }
+
+    .hero p {
+        font-size: 1.1rem;
+    }
+
+    /* --- Seções no Tablet --- */
+    /* Reduz o padding vertical das seções */
+    .section-padding {
+        padding: 60px 0;
+    }
+
+    /* Títulos de seção menores no tablet */
+    .section-title h2 {
+        font-size: 1.9rem;
+    }
+
+    /* --- Cards de Features no Tablet --- */
+    /* Força 2 colunas em vez de deixar o auto-fit decidir */
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* --- Cards de Serviços no Tablet --- */
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* --- Cards de Depoimentos no Tablet --- */
+    .reviews-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* --- Seção Sobre no Tablet --- */
+    /* Reduz o espaçamento entre imagem e texto */
+    .about-wrapper {
+        gap: 30px;
+    }
+
+    /* --- Footer no Tablet --- */
+    /* Permite que as colunas ocupem metade da linha */
+    .ft-brand, .ft-contact, .ft-loc {
+        min-width: 200px;
+    }
+}
+
+
+/* ==========================================================
+  23. RESPONSIVIDADE - CELULAR PEQUENO (≤ 480px)
+   ==========================================================
+   Ajustes para telas muito pequenas (iPhone SE, Galaxy A03, etc).
+   Foco em legibilidade e usabilidade com uma mão só.
+   Segue as regras da skill @mobile-design:
+   - Alvos de toque ≥ 44px (Lei de Fitts)
+   - Textos legíveis sem zoom
+   - Sem scroll horizontal
+   ========================================================== */
+@media (max-width: 480px) {
+
+    /* --- Hero em Telas Pequenas --- */
+    .hero h1 {
+        font-size: 1.8rem;                 /* Cabe em telas de 320px sem quebrar */
+    }
+
+    .hero p {
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+    }
+
+    /* --- Títulos de Seção --- */
+    .section-title h2 {
+        font-size: 1.6rem;                 /* Evita que o título quebre em 2 linhas longas */
+        padding: 0 10px;
+    }
+
+    /* --- Paddings Reduzidos --- */
+    /* Menos espaço vazio = mais conteúdo visível na tela pequena */
+    .section-padding {
+        padding: 50px 0;
+    }
+
+    .features {
+        padding: 40px 10px;
+    }
+
+    /* --- Cards em 1 Coluna --- */
+    /* Em telas muito pequenas, cada card ocupa a largura toda */
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .reviews-grid {
+        grid-template-columns: 1fr;        /* Evita scroll horizontal nos depoimentos */
+        gap: 20px;
+    }
+
+    /* --- Cards menores para caber na tela --- */
+    .feature-card {
+        padding: 30px 20px;
+        border-radius: 15px;
+    }
+
+    .srv-card {
+        padding: 25px 20px;
+    }
+
+    .review-box {
+        padding: 25px 20px;
+    }
+
+    /* --- Seção Sobre --- */
+    .about-wrapper {
+        gap: 30px;
+    }
+
+    .about-img-box {
+        min-width: 100%;                    /* Imagem ocupa 100% da tela */
+    }
+
+    .about-content {
+        min-width: 100%;
+    }
+
+    .about-content h2 {
+        font-size: 1.5rem;
+    }
+
+    /* --- Footer Empilhado --- */
+    /* No celular pequeno, cada coluna ocupa a largura toda */
+    .footer-top {
+        padding: 40px 0;
+    }
+
+    .footer-flex {
+        flex-direction: column;             /* Empilha as 3 colunas verticalmente */
+        gap: 30px;
+    }
+
+    .ft-brand, .ft-contact, .ft-loc {
+        min-width: 100%;
+        text-align: center;                 /* Centraliza o conteúdo no mobile */
+    }
+
+    .ft-social {
+        justify-content: center;
+        display: flex;
+        gap: 15px;
+    }
+
+    .ft-social a {
+        margin-right: 0;                    /* Remove margem pois já usa gap */
+    }
+
+    /* --- Botões CTA do Hero --- */
+    /* Empilha os botões verticalmente e centraliza */
+    .main-cta-group {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .btn-hero-primary,
+    .btn-hero-secondary {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+        padding: 14px 30px;
+    }
+
+    /* --- Marquee menor --- */
+    .marquee-content span {
+        font-size: 0.8rem;
+        margin: 0 12px;
+    }
+}
+
+
+/* ==========================================================
+  24. ALVOS DE TOQUE ACESSÍVEIS (MOBILE)
+   ==========================================================
+   Regra da skill @mobile-design (Lei de Fitts):
+   Todo elemento clicável deve ter no MÍNIMO 44px de altura.
+   Isso garante que o usuário consiga clicar com o dedo
+   sem errar, mesmo usando o celular com uma mão só.
+   ========================================================== */
+@media (max-width: 768px) {
+
+    /* Links do menu mobile - altura mínima de toque */
+    .nav-menu a {
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+    }
+
+    /* Botões de ação rápida */
+    .q-btn {
+        min-height: 44px;
+    }
+
+    /* Links do footer */
+    .ft-link {
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    /* Botões da app bar inferior */
+    .app-btn {
+        min-height: 44px;
+    }
+
+    /* Ícones de redes sociais */
+    .ft-social a {
+        min-width: 44px;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
 }
